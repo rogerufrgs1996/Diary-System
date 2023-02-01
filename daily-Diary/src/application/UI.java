@@ -37,15 +37,15 @@ public class UI {
 
     public static Day writeDay(Scanner sc){
         sc.nextLine();
-        System.out.print("TITLE: ");
+        System.out.print(ANSI_BLACK + ANSI_YELLOW_BACKGROUND+"TITLE : "+ANSI_RESET);
         String title = sc.nextLine();
 
-        System.out.print("DAY MOOD: ");
+        System.out.print(ANSI_BLACK + ANSI_YELLOW_BACKGROUND+"MOOD : "+ANSI_RESET);
         String mood = sc.nextLine();
 
         Day day = new Day(title, new Date() , Mood.valueOf(mood));
         boolean end =false;
-        System.out.print("               TEXT \n");
+        System.out.print(ANSI_BLACK + ANSI_YELLOW_BACKGROUND+"TEXT : \n"+ANSI_RESET);
         System.out.print("lines: \n");
         int lineCount =1;
         while(!end){
@@ -61,25 +61,32 @@ public class UI {
     public static void printDay(Scanner sc, Person person) throws ParseException{
         sc.nextLine();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        System.out.print("TYPE DATE OF DAY: dd/MM/yyyy");
+        System.out.print(ANSI_BLACK + ANSI_YELLOW_BACKGROUND+"READING DAY ");
+        System.out.print("TYPE DATE OF DAY(dd/MM/yyyy): "+ANSI_RESET);
+        System.out.println();
         String date = sc.nextLine();
+        clearScreen();
         DataBase.readDay(sdf.parse(date), person);
+        System.out.println();
+        System.out.println(ANSI_BLACK + ANSI_YELLOW_BACKGROUND+"TYPE TO BACK TO MENU  "+ANSI_RESET);
         sc.next();
     }
     public static int menu(Scanner sc){
-        System.out.println(ANSI_BLUE+"CREATE NEW DIARY (1): ");
-        System.out.println("LOGIN (2): "+ANSI_RESET);
-        System.out.print(ANSI_BLUE_BACKGROUND+"TYPE ->"+ANSI_RESET);
+        System.out.println(ANSI_BLACK + ANSI_YELLOW_BACKGROUND+"CREATE NEW DIARY : (1)");
+        System.out.println("LOGIN : (2)");
+        System.out.println("EXIT : (0)");
+        System.out.print("TYPE :"+ANSI_RESET);
         int option = sc.nextInt();
         System.out.println();
         
-
     return option;
     }
-    public static int menuLogin(Scanner sc){
-        System.out.println(ANSI_BLUE+"CREATE NEW DAY(1): ");
-        System.out.println("PRINT DAY(2): "+ANSI_RESET);
-        System.out.print(ANSI_BLUE_BACKGROUND+"TYPE -> "+ANSI_RESET);
+    public static int menuLogin(Scanner sc, Person cPerson){
+        System.out.println(ANSI_WHITE+ANSI_RED_BACKGROUND+"Welcome to the diary of "+ cPerson.getName()+ANSI_RESET);
+        System.out.println(ANSI_BLACK + ANSI_YELLOW_BACKGROUND+"WRITE ABOUT YOUR DAY : (1)");
+        System.out.println("READ DAY(2): ");
+        System.out.println("EXIT : (0)");
+        System.out.print("TYPE -> "+ANSI_RESET);
         int option = sc.nextInt();
         System.out.println();
     return option;
@@ -87,19 +94,21 @@ public class UI {
 
     public static Person login(Scanner sc){
         sc.nextLine();
+        System.out.println(ANSI_WHITE+ANSI_RED_BACKGROUND);
         System.out.print("NAME: ");
         String name = sc.nextLine();
-        System.out.print("PASSWORD: ");
+        System.out.print("PASSWORD: "+ANSI_RESET);
         String readPassword = sc.nextLine();
         return DataBase.validateNickName(name, readPassword);
     }
 
     public static Person createNewDiary(Scanner sc){
         sc.nextLine();
-        System.out.print("NAME: ");
+        System.out.println(ANSI_WHITE+ANSI_RED_BACKGROUND);
+        System.out.print("NAME: "+ANSI_RESET);
         String name = sc.nextLine();
         DataBase.validateNickName(name);
-        System.out.print("PASSWORD: ");
+        System.out.print(ANSI_WHITE+ANSI_RED_BACKGROUND+"PASSWORD: "+ANSI_RESET);
         String password = sc.nextLine();
         return new Person(name, password);
     }

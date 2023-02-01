@@ -53,7 +53,7 @@ public class Day{
             sb.append(msg);
             sb.append("\n");
         }
-        sb.append("_______________________________________________________________________");
+        sb.append("___");
         return sb.toString();
     }
     

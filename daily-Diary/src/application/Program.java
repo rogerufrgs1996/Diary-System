@@ -26,7 +26,7 @@ public class Program {
                         Person cPerson = UI.login(sc);
                         do{
                             UI.clearScreen();
-                            optionLogin = UI.menuLogin(sc);
+                            optionLogin = UI.menuLogin(sc, cPerson);
                             switch(optionLogin){
                                 case 1: 
                                     Day day = UI.writeDay(sc);
