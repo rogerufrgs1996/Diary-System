@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.Scanner;
 
 import entities.Day;
+import entities.Diary;
+import entities.Encript;
 import entities.Person;
 import entities.mood.Mood;
 
@@ -34,39 +36,38 @@ public class UI {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
-
-    public static Day writeDay(Scanner sc){
+    public static void writeDay(Scanner sc, Diary diary){
         sc.nextLine();
         System.out.print(ANSI_BLACK + ANSI_YELLOW_BACKGROUND+"TITLE : "+ANSI_RESET);
         String title = sc.nextLine();
-
         System.out.print(ANSI_BLACK + ANSI_YELLOW_BACKGROUND+"MOOD : "+ANSI_RESET);
         String mood = sc.nextLine();
-
-        Day day = new Day(title, new Date() , Mood.valueOf(mood));
-        boolean end =false;
+        Day day = new Day(title, new Date() , Mood.valueOf(mood), mood);
+        boolean end = false;
         System.out.print(ANSI_BLACK + ANSI_YELLOW_BACKGROUND+"TEXT : \n"+ANSI_RESET);
         System.out.print("lines: \n");
         int lineCount =1;
         while(!end){
             System.out.print(lineCount+": ");
-            String strn = sc.nextLine();
-            day.lineOfText(strn);
-            end = strn.isEmpty();
-            lineCount++;
+            String strn1 = sc.nextLine();
+            String strn = Encript.hide(strn1);
+            end = strn1.isEmpty();
+            if(!end){
+               day.lineOfText(strn);
+               lineCount++;
+            }
         }
-    return day;
+        DataBase.updateDiary(diary, day.dayToEncriptDay());
     }
-
-    public static void printDay(Scanner sc, Person person) throws ParseException{
+    public static void readDay(Scanner sc, Diary diary) throws ParseException{
         sc.nextLine();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         System.out.print(ANSI_BLACK + ANSI_YELLOW_BACKGROUND+"READING DAY ");
         System.out.print("TYPE DATE OF DAY(dd/MM/yyyy): "+ANSI_RESET);
         System.out.println();
         String date = sc.nextLine();
-        clearScreen();
-        DataBase.readDay(sdf.parse(date), person);
+        //clearScreen();
+        DataBase.printDay(sdf.parse(date), diary);
         System.out.println();
         System.out.println(ANSI_BLACK + ANSI_YELLOW_BACKGROUND+"TYPE TO BACK TO MENU  "+ANSI_RESET);
         sc.next();
@@ -91,25 +92,30 @@ public class UI {
         System.out.println();
     return option;
     }
-
-    public static Person login(Scanner sc){
+    public static Diary login(Scanner sc){
         sc.nextLine();
         System.out.println(ANSI_WHITE+ANSI_RED_BACKGROUND);
-        System.out.print("NAME: ");
-        String name = sc.nextLine();
+        System.out.print("NICKNAME: ");
+        String rNickName = sc.nextLine();
         System.out.print("PASSWORD: "+ANSI_RESET);
-        String readPassword = sc.nextLine();
-        return DataBase.validateNickName(name, readPassword);
+        String rPassword = sc.nextLine();
+        return DataBase.validateLogin(rNickName, rPassword);
     }
-
-    public static Person createNewDiary(Scanner sc){
+    public static void firstSign(Scanner sc){
         sc.nextLine();
         System.out.println(ANSI_WHITE+ANSI_RED_BACKGROUND);
-        System.out.print("NAME: "+ANSI_RESET);
-        String name = sc.nextLine();
-        DataBase.validateNickName(name);
-        System.out.print(ANSI_WHITE+ANSI_RED_BACKGROUND+"PASSWORD: "+ANSI_RESET);
-        String password = sc.nextLine();
-        return new Person(name, password);
+        System.out.print("Nickname: "+ANSI_RESET);
+        String nickName = sc.nextLine();
+        try{
+            DataBase.nickNameIsUnic(Encript.cript(nickName));
+            System.out.print(ANSI_WHITE+ANSI_RED_BACKGROUND+"NAME: "+ANSI_RESET);
+            String name = sc.nextLine();
+            System.out.print(ANSI_WHITE+ANSI_RED_BACKGROUND+"PASSWORD: "+ANSI_RESET);
+            String password = sc.nextLine();
+            DataBase.createFile(new Person(Encript.hide(name), Encript.cript(password), Encript.cript(nickName)));
+        } catch (UIException e) {
+            System.err.println(e.getMessage());
+        }
+        
     }
 }

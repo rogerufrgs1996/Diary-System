@@ -6,6 +6,12 @@ public enum Mood {
     TIRED,
     EUFORIC,
     DEEPREST,
+    LOVE,
+    HORNY,
+    ESTETIC,
+    ATHLETIC,
+    SURF,
+    NATURE,
     GOOD_VIBES;
 
 }

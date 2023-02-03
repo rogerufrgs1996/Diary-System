@@ -12,17 +12,31 @@ public class Day{
     private String title;
     private Date date;
     private Mood mood;
-    List<String> msg = new ArrayList<>();
+    private String moodStrn;
+    private List<String> msg = new ArrayList<>();
+    
+    public List<String> getMsg() {
+        return msg;
+    }
 
-    public Day( String title, Date date, Mood mood) {
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+
+    public Day(String title, Date date, Mood mood,List<String> msg) {
         this.title = title;
         this.date = date;
         this.mood = mood;
+        this.msg = msg;
+    }
+    public Day(String title, Date date, Mood mood, String moodString) {
+        this.title = title;
+        this.date = date;
+        this.mood = mood;
+        this.moodStrn = moodString;
     }
     public void lineOfText(String text) {
         msg.add(text);
     }
-    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    
     public String getTitle() {
         return title;
     }
@@ -41,19 +55,20 @@ public class Day{
     public void setMood(Mood mood) {
         this.mood = mood;
     }
+    public EncriptDay dayToEncriptDay(){
+        return new EncriptDay(title, sdf.format(date) , moodStrn, msg);
+    }
 
     public String toString(){
         StringBuilder sb = new StringBuilder();
-        sb.append("\nDATE: "+ sdf.format(date));
-        sb.append("\nTITLE: "+ title);
-        sb.append("\nMOOD: "+ mood);
-        sb.append("\nDAY: ");
+        sb.append("\n"+sdf.format(date));
+        sb.append("\n"+ title);
+        sb.append("\n"+ mood);
         sb.append("\n");
         for (String msg : msg){
             sb.append(msg);
             sb.append("\n");
         }
-        sb.append("___");
         return sb.toString();
     }
     

@@ -3,9 +3,8 @@ package application;
 
 import java.text.ParseException;
 import java.util.Scanner;
+import entities.Diary;
 
-import entities.Day;
-import entities.Person;
 
 public class Program {
     public static void main(String[] args) {
@@ -15,25 +14,23 @@ public class Program {
         do{
             
             try{
-                UI.clearScreen();
+                //UI.clearScreen();
                 option = UI.menu(sc);  
                 switch(option){
                     case 1:
-                        Person p = UI.createNewDiary(sc);
-                        DataBase.toFile(p);
+                        UI.firstSign(sc);
                         break;
                     case 2:
-                        Person cPerson = UI.login(sc);
+                        Diary diary = UI.login(sc);
                         do{
-                            UI.clearScreen();
-                            optionLogin = UI.menuLogin(sc, cPerson);
+                            //UI.clearScreen();
+                            optionLogin = UI.menuLogin(sc, diary);
                             switch(optionLogin){
                                 case 1: 
-                                    Day day = UI.writeDay(sc);
-                                    DataBase.updateDiary(cPerson, day);
+                                    UI.writeDay(sc, diary);
                                     break;
                                 case 2:
-                                    UI.printDay(sc, cPerson);
+                                    UI.readDay(sc, diary);
                                     break;
                             }
                         }while(optionLogin!=0);
