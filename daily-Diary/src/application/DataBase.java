@@ -54,6 +54,7 @@ public class DataBase {
         List<Day> days = diary.getDays();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         for (Day day : days){
+            System.out.println();
             if(day.getDate().equals(date)){
                 System.out.println(ANSI_GREEN + ANSI_BLACK_BACKGROUND + "DATE: "+ ANSI_RESET
                 +ANSI_GREEN+ sdf.format(day.getDate()) + ANSI_RESET);
@@ -105,7 +106,7 @@ public class DataBase {
     }
     private static Diary fileToDiary(File file){
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        List<String> text = new ArrayList<>();
+        List<Day> days = new ArrayList<>();
         Date date =null;
         String title ="";
         Mood mood=null;
@@ -119,17 +120,14 @@ public class DataBase {
             
             while(line != null){
                 showLine = Encript.show(line);
-                System.out.println("PAS AQUI");
                 int cont =0;
                 if(showLine.equals("**")){
-                    System.out.println("here");
+                    Day day = new Day();
                     String str = br.readLine();
                     line =  Encript.show(str); 
                     while(!line.equals("__")){
-                        System.out.println(line+"<- line, int -> "+cont);
                         switch(cont){
                             case 0:
-                                System.out.println("case0"+line+"<- line, int -> "+cont);
                                 date = sdf.parse(line);
                                 cont++;
                                 break;
@@ -142,16 +140,17 @@ public class DataBase {
                                 cont++;
                                 break;
                             default:
-                                text.add(line);
+                                day.lineOfText(line);
                         }
                         line =  Encript.show(br.readLine());  
                                  
                     }
-                    diary.addDay(new Day(title, date, mood, text));
+                    day.receiveDay(title, date, mood);
+                    days.add(day);
+                    diary.setDays(days);
                 }
                 line = br.readLine();
             }
-            System.out.println("passei aqui");
             return diary;
         }
         catch(IOException e){

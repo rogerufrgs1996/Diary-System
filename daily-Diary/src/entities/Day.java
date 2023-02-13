@@ -20,12 +20,18 @@ public class Day{
     }
 
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
+    
     public Day(String title, Date date, Mood mood,List<String> msg) {
         this.title = title;
         this.date = date;
         this.mood = mood;
         this.msg = msg;
+    }
+    public Day() {}
+    public Day(String title, Date date, Mood mood) {
+        this.title = title;
+        this.date = date;
+        this.mood = mood;
     }
     public Day(String title, Date date, Mood mood, String moodString) {
         this.title = title;
@@ -35,6 +41,11 @@ public class Day{
     }
     public void lineOfText(String text) {
         msg.add(text);
+    }
+    public void receiveDay(String title, Date date, Mood mood) {
+        this.title = title;
+        this.date = date;
+        this.mood = mood;
     }
     
     public String getTitle() {

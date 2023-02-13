@@ -57,6 +57,7 @@ public class UI {
                lineCount++;
             }
         }
+        diary.addDay(day);
         DataBase.updateDiary(diary, day.dayToEncriptDay());
     }
     public static void readDay(Scanner sc, Diary diary) throws ParseException{
@@ -66,7 +67,7 @@ public class UI {
         System.out.print("TYPE DATE OF DAY(dd/MM/yyyy): "+ANSI_RESET);
         System.out.println();
         String date = sc.nextLine();
-        //clearScreen();
+        clearScreen();
         DataBase.printDay(sdf.parse(date), diary);
         System.out.println();
         System.out.println(ANSI_BLACK + ANSI_YELLOW_BACKGROUND+"TYPE TO BACK TO MENU  "+ANSI_RESET);

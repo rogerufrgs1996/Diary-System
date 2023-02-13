@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Diary extends Person{
-    List<Day> days = new ArrayList<>();
+    private List<Day> days = new ArrayList<>();
     private String path;
     public Diary(String name, String path) {
         super(name);
@@ -21,6 +21,9 @@ public class Diary extends Person{
         return "Diary []";
     }
 
+    public void setDays(List<Day> days) {
+        this.days = days;
+    }
     public List<Day> getDays() {
         return days;
     }
