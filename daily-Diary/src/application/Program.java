@@ -14,7 +14,7 @@ public class Program {
         do{
             
             try{
-                //UI.clearScreen();
+                UI.clearScreen();
                 option = UI.menu(sc);  
                 switch(option){
                     case 1:
@@ -23,24 +23,18 @@ public class Program {
                     case 2:
                         Diary diary = UI.login(sc);
                         do{
-                            //UI.clearScreen();
+                            UI.clearScreen();
                             optionLogin = UI.menuLogin(sc, diary);
                             switch(optionLogin){
                                 case 1: 
-                                    UI.writeDay(sc, diary);
+                                    diary = UI.writeDay(sc, diary);
                                     break;
                                 case 2:
                                     UI.readDay(sc, diary);
                                     break;
                             }
                         }while(optionLogin!=0);
-                        break;
-                    
-                        
-                        
-                        
-                        
-
+                        break;           
                 }
             }
             catch(UIException e){

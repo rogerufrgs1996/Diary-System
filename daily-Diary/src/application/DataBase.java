@@ -70,13 +70,16 @@ public class DataBase {
         }
     }
     public static void updateDiary(Diary diary, EncriptDay encriptDay){
-        System.out.println("path: "+ diary.getPath());
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(diary.getPath(), true))){
             bw.write(encriptDay.toString());
         }
         catch(IOException e){
             System.out.println("ERROR: "+ e.getMessage());
         } 
+    }
+    public static Diary updateDayInDiary(String path){
+        File diary = new File(path);
+        return fileToDiary(diary);
     }
     public static boolean nickNameIsUnic(String nickName){
         String past = "C:\\Users\\roger\\OneDrive\\Documentos\\dataDiary";
@@ -110,6 +113,7 @@ public class DataBase {
         Date date =null;
         String title ="";
         Mood mood=null;
+        
         try (BufferedReader br = new BufferedReader(new FileReader(file.getPath()))){
             String line = br.readLine();
             String showLine ="";
@@ -117,7 +121,6 @@ public class DataBase {
             line = br.readLine();
             String name = Encript.show(line);
             Diary diary = new Diary(name, file.getPath());
-            
             while(line != null){
                 showLine = Encript.show(line);
                 int cont =0;

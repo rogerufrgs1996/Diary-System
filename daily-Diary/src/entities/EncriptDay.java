@@ -15,7 +15,9 @@ public class EncriptDay {
         this.title = Encript.hide(title);
         this.date = Encript.hide(date);
         this.mood = Encript.hide(mood);
-        this.msg = msg;
+        for(String line : msg){
+            this.msg.add(Encript.hide(line));
+        }
     }
     public void lineOfText(String text) {
         msg.add(text);

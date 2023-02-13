@@ -14,7 +14,7 @@ public class Diary extends Person{
         return path;
     }
     public void addDay(Day day){
-        days.add(day);
+        this.days.add(day);
     }
     @Override
     public String toString() {

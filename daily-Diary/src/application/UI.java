@@ -36,7 +36,7 @@ public class UI {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
-    public static void writeDay(Scanner sc, Diary diary){
+    public static Diary writeDay(Scanner sc, Diary diary){
         sc.nextLine();
         System.out.print(ANSI_BLACK + ANSI_YELLOW_BACKGROUND+"TITLE : "+ANSI_RESET);
         String title = sc.nextLine();
@@ -50,15 +50,14 @@ public class UI {
         while(!end){
             System.out.print(lineCount+": ");
             String strn1 = sc.nextLine();
-            String strn = Encript.hide(strn1);
             end = strn1.isEmpty();
             if(!end){
-               day.lineOfText(strn);
+               day.lineOfText(strn1);
                lineCount++;
             }
         }
-        diary.addDay(day);
         DataBase.updateDiary(diary, day.dayToEncriptDay());
+        return DataBase.updateDayInDiary(diary.getPath());
     }
     public static void readDay(Scanner sc, Diary diary) throws ParseException{
         sc.nextLine();
@@ -116,6 +115,8 @@ public class UI {
             DataBase.createFile(new Person(Encript.hide(name), Encript.cript(password), Encript.cript(nickName)));
         } catch (UIException e) {
             System.err.println(e.getMessage());
+            System.out.println(ANSI_BLACK + ANSI_YELLOW_BACKGROUND+"TYPE TO BACK TO MENU  "+ANSI_RESET);
+            sc.next();
         }
         
     }
