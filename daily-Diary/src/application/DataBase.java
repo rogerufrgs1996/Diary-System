@@ -69,6 +69,24 @@ public class DataBase {
             }
         }
     }
+
+    public static void printDay(Diary diary){
+        List<Day> days = diary.getDays();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        for (Day day : days){
+            System.out.println();
+            System.out.println(ANSI_GREEN + ANSI_BLACK_BACKGROUND + "DATE: "+ ANSI_RESET
+            +ANSI_GREEN+ sdf.format(day.getDate()) + ANSI_RESET);
+            System.out.println(ANSI_PURPLE + ANSI_BLACK_BACKGROUND + "TITLE: "+ ANSI_RESET
+            + ANSI_PURPLE+ day.getTitle() + ANSI_RESET);
+            System.out.println(ANSI_YELLOW + ANSI_BLACK_BACKGROUND + "MOOD: "+ANSI_RESET
+            +ANSI_YELLOW+day.getMood()+ANSI_RESET);
+            System.out.println(ANSI_BLUE + ANSI_BLACK_BACKGROUND + "DAY: "+ ANSI_RESET);
+            for(String line : day.getMsg()){
+                System.out.println(ANSI_RED + line + ANSI_RESET);
+            }
+        }
+    }
     public static void updateDiary(Diary diary, EncriptDay encriptDay){
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(diary.getPath(), true))){
             bw.write(encriptDay.toString());
@@ -124,11 +142,11 @@ public class DataBase {
             while(line != null){
                 showLine = Encript.show(line);
                 int cont =0;
-                if(showLine.equals("**")){
+                if(showLine.equals("**")){ //finding begining of the day
                     Day day = new Day();
                     String str = br.readLine();
                     line =  Encript.show(str); 
-                    while(!line.equals("__")){
+                    while(!line.equals("__")){ //convert the line strings into object day 
                         switch(cont){
                             case 0:
                                 date = sdf.parse(line);

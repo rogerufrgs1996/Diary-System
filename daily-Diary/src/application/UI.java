@@ -72,6 +72,16 @@ public class UI {
         System.out.println(ANSI_BLACK + ANSI_YELLOW_BACKGROUND+"TYPE TO BACK TO MENU  "+ANSI_RESET);
         sc.next();
     }
+
+    public static void readAllDiary(Scanner sc, Diary diary){
+        DataBase.printDay(diary);
+        System.out.println();
+        System.out.println(ANSI_BLACK + ANSI_YELLOW_BACKGROUND+"TYPE TO BACK TO MENU  "+ANSI_RESET);
+        sc.next();
+    }
+
+
+
     public static int menu(Scanner sc){
         System.out.println(ANSI_BLACK + ANSI_YELLOW_BACKGROUND+"CREATE NEW DIARY : (1)");
         System.out.println("LOGIN : (2)");
@@ -86,6 +96,7 @@ public class UI {
         System.out.println(ANSI_WHITE+ANSI_RED_BACKGROUND+"Welcome to the diary of "+ cPerson.getName()+ANSI_RESET);
         System.out.println(ANSI_BLACK + ANSI_YELLOW_BACKGROUND+"WRITE ABOUT YOUR DAY : (1)");
         System.out.println("READ DAY(2): ");
+        System.out.println("READ ALL DIARY(3): ");
         System.out.println("EXIT : (0)");
         System.out.print("TYPE -> "+ANSI_RESET);
         int option = sc.nextInt();

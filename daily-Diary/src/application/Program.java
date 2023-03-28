@@ -32,6 +32,9 @@ public class Program {
                                 case 2:
                                     UI.readDay(sc, diary);
                                     break;
+                                case 3: 
+                                    UI.readAllDiary(sc, diary);
+                                    break;
                             }
                         }while(optionLogin!=0);
                         break;           
